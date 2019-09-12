@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-const int maxn = 1e6 + 10;
 bool isprime[maxn];
 int cntp, prime[maxn];
 void init(){
@@ -15,8 +12,4 @@ void init(){
             if(i % prime[j] == 0) break ;
         }
     }
-}
-int main(){
-    init();
-    return 0;
 }
