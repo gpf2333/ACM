@@ -53,12 +53,12 @@ struct SuffixArray{
         }
     }
 
-    inline int rmq(int l, int r){ //查询以后缀中从l和以开始和r开始的后缀的最长公共前缀lcp
+    inline int rmq(int l, int r){ 
         int k = 31 - __builtin_clz(r - l + 1);
         return min(dp[l][k], dp[r - (1 << k) + 1][k]);
     }
 
-    inline int lcp(int l, int r){
+    inline int lcp(int l, int r){ //查询以后缀中从l和以开始和r开始的后缀的最长公共前缀lcp
         l = rk[l], r = rk[r];
         if(l > r) swap(l , r);
         if(l == r) return n - sa[l] + 1;
