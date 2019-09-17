@@ -4,23 +4,32 @@
 // \texttt{is\_prime[i-a]=true}表示$i$是素数\\
 // $1<a<b \le 10^{12}, b-a \le 10^6$
 // ---
-const int maxn = "Edit";
-bool is_prime_small[maxn], is_prime[maxn];
-ll prime[maxn];
-int segment_sieve(ll a, ll b)
-{
-    int tot = 0;
-    for (ll i = 0; i * i < b; ++i) is_prime_small[i] = true;
-    for (ll i = 0; i < b - a; ++i) is_prime[i] = true;
-    for (ll i = 2; i * i < b; ++i)
-        if (is_prime_small[i])
-        {
-            for (ll j = 2 * i; j * j < b; j += i)
-                is_prime_small[j] = false;
-            for (ll j = max(2LL, (a + i - 1) / i) * i; j < b; j += i)
-                is_prime[j - a] = false;
+typedef long long ll;
+const int maxn = 1e6 + 10;
+const int N = 50000; // sqrt(2^31) 46340
+bool isprime[maxn]; //2 ~ sqrt(R)
+bool isprime_big[maxn];
+//pre
+void init(){
+    for(int i = 2; i < N; ++i) isprime[i] = 1;
+    for(int i = 2; i * i < N; ++i){
+        if(isprime[i]){
+            for(int j = 2 * i; j < N; j += i){
+                isprime[j] = 0;
+            }
         }
-    for (ll i = 0; i < b - a; ++i)
-        if (is_prime[i]) prime[tot++] = i + a;
-    return tot;
+    }
+}
+
+void solve(ll L,ll R){
+    int len = R - L + 1;
+    for(int i = 0; i < len; ++i) isprime_big[i] = 1;
+    if(L == 1) isprime_big[0] = 0;
+    for(ll i = 2; i * i <= R; ++i){
+        if(isprime[i]){
+            for(ll j = max(2LL,(L - 1 + i) / i) * i; j <= R; j += i){
+                isprime_big[j - L] = 0;
+            }
+        }
+    }
 }
